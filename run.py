@@ -42,6 +42,26 @@ def search():
 	#print e.state
 	return jsonify({'result': True})
 
+#def get_all():
+#	return jsonify(get_units(None))
+
+@app.route("/all")
+@app.route("/all/<string:state>")
+def get_with_state(state = None):
+	return jsonify(get_units(state))
+
+def get_units(state):
+	units = Unit.objects
+	res = {}
+	if state and state not in ["on", "off"]:
+		return {'err_reason': 'State is not valid'}
+	for e in units:
+		if not state:
+			res[str(e.id)] = {'name': e.name, 'state': e.state}
+		elif e.state == state:
+			res[str(e.id)] = {'name': e.name, 'state': e.state}
+	return res
+
 # MAIN
 if __name__ == '__main__':
 	app.run(debug=True)
