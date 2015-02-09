@@ -16,7 +16,7 @@ schema = {
     'name': {
         'type': 'string',
         'minlength': 1,
-        'maxlength': 15,
+        'maxlength': 30,
         'required': True,
         # talk about hard constraints! For the purpose of the demo
         # 'lastname' is an API entry-point, so we need it to be unique.
