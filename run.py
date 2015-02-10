@@ -1,7 +1,7 @@
 from eve import Eve
 from flask import Flask, url_for, session, g, redirect, request, flash, render_template, send_from_directory, jsonify
 from flask.ext.mongoengine import MongoEngine, MongoEngineSessionInterface
-import datetime
+import datetime, sys
 
 # APP
 #######
@@ -33,10 +33,12 @@ class Unit(engine.DynamicDocument):
 		return self.name
 
 
-@app.route("/get-one")
-def search():
+@app.route("/get")
+@app.route("/get/<string:unitname>")
+def search(unitname="obama"):
 	#unit = Unit.objects.get(name="obama")
-	e = Unit.objects.get(name="obama")
+	e = get_unit(unitname)
+	print e
 	if(e):
 		return jsonify({'name': e.name, 'state': e.state})
 	#print e.state
@@ -61,6 +63,15 @@ def get_units(state):
 		elif e.state == state:
 			res[str(e.id)] = {'name': e.name, 'state': e.state}
 	return res
+
+def get_unit(name):
+	try:
+		return Unit.objects.get(name=unitname)
+	except:
+		e = sys.exc_info()[0]
+   		print e
+		return None
+
 
 # MAIN
 if __name__ == '__main__':
