@@ -16,6 +16,7 @@ app = Eve()
 def get_units(state):
 	units = Unit.objects
 	res = {}
+	# TODO: Modify
 	if state and state not in ["on", "off"]:
 		return error_handling('03')
 	for e in units:

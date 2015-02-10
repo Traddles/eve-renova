@@ -36,8 +36,26 @@ def logout():
     return redirect(url_for('show_entries'))
 
 
-#@flask.route('/update/<entry_id>', methods=['POST'])
-#def update_entry(entry_id):
+@flask.route('/update/<entry_id>', methods=['POST'])
+def update_entry(entry_id):
+	if not session.get('logged_in'):
+		flash("This won't work unless you login")
+		return redirect(url_for('show_entries'))
+	update_object = get_by_id(entry_id)
+
+	print "This is him:", update_object.name
+	for key in request.form:
+		choice = request.form[key]
+		print key, choice
+
+		if choice in update_object.allowed_fields[key]:
+			print "allright"
+			choice = update_object.allowed_fields[key][choice]
+		update_object[key] = choice
+
+	update_object.save()
+	flash('Entry was updated')
+	return redirect(url_for('show_entries'))
 
 @flask.route('/')
 def show_entries():
