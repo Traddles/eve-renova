@@ -1,6 +1,10 @@
 # eve-renova
 Eve and falsk at the same time. `TRIAL`
 
+## Docs
+[Flask 0.1](http://flask.pocoo.org/docs/0.10/api/)
+[Eve config](http://python-eve.org/config.html)
+
 ## Get started
 
 ### Add data to 'unit'
