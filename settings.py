@@ -1,4 +1,5 @@
-
+#import os
+#print os.environ.get('PORT')
 
 # Mongo DB
 MONGO_HOST = 'localhost'
