@@ -31,3 +31,6 @@ jsonify is aliased to `python -m json.tool`
     "state" : "off"
 }
 ```
+
+## Future additions to functionality
+* Todo-list for different areas (cabin e.g.) [How to](http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
