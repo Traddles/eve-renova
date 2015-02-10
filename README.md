@@ -38,3 +38,7 @@ jsonify is aliased to `python -m json.tool`
 
 ## Future additions to functionality
 * Todo-list for different areas (cabin e.g.) [How to](http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
+
+
+### Comment
+"Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:5111/all/on. This can be fixed by moving the resource to the same domain or enabling CORS."
