@@ -1,8 +1,9 @@
 {% extends "layout.html" %}
 {% block body %}
-  <ul class=entries>
+  <ul id="db-entries" class=entries>
   {% for entry in entries %}
-    <li><p>{{ entry.name }}</p>
+    <li>
+      <p>{{ entry.name }}</p>
       {% if session.logged_in %}
         {% if entry.allowed_fields %}
           <form action="/update/{{ entry.id }}" method=post class=update-entry>
