@@ -42,7 +42,7 @@ def search(unitname="obama"):
 	if(e):
 		return jsonify({'name': e.name, 'state': e.state})
 	#print e.state
-	return jsonify({'result': True})
+	return jsonify(error_handling('08'))
 
 #def get_all():
 #	return jsonify(get_units(None))
@@ -56,7 +56,7 @@ def get_units(state):
 	units = Unit.objects
 	res = {}
 	if state and state not in ["on", "off"]:
-		return {'err_reason': 'State is not valid'}
+		return error_handling('08')
 	for e in units:
 		if not state:
 			res[str(e.id)] = {'name': e.name, 'state': e.state}
@@ -67,11 +67,18 @@ def get_units(state):
 def get_unit(name):
 	try:
 		return Unit.objects.get(name=unitname)
-	except:
-		e = sys.exc_info()[0]
-   		print e
+	except(NameError):
+		#e = sys.exc_info()[0]
+   		#print e
 		return None
 
+def error_handling(type, message = ''):
+	if message == '':
+		if type == '03':
+			message = 'State is not valid'
+		elif type == '08':
+			message = "Can't find any match in database"
+	return {'type': type, 'message': message}
 
 # MAIN
 if __name__ == '__main__':
