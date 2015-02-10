@@ -16,7 +16,7 @@ curl http://127.0.0.1:5000/all/on | jsonify
 jsonify is aliased to `python -m json.tool'
 
 ## Data structure
-{
+```python{
     "_id" : ObjectId("54d8b44c9f19a36cc98cbdcf"),
     "_updated" : ISODate("2015-02-09T13:21:16.000Z"),
     "_created" : ISODate("2015-02-09T13:21:16.000Z"),
@@ -29,3 +29,4 @@ jsonify is aliased to `python -m json.tool'
     "name" : "obama",
     "state" : "off"
 }
+```
