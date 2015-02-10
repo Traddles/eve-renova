@@ -10,9 +10,9 @@ Add some data to play with:
 "Right now only state on and off is allowed."
 
 ### Look at data
-curl http://127.0.0.1:5000/all/on | jsonify
+`curl http://127.0.0.1:5000/all/on | jsonify`
 
-## jsonify alias in linux
+#### jsonify alias in linux
 jsonify is aliased to `python -m json.tool`
 
 ## Data structure
