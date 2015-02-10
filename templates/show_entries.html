@@ -2,7 +2,8 @@
 {% block body %}
   <ul class=entries>
   {% for entry in entries %}
-    <li><h2>{{ entry.name }}</h2>
+    <li><p>{{ entry.name }}</p>
+      {% if session.logged_in %}
         {% if entry.allowed_fields %}
           <form action="/update/{{ entry.id }}" method=post class=update-entry>
             <SELECT NAME="state">
@@ -18,8 +19,9 @@
             <input type=submit value=Update>
           </form>
         {% else %}
-          <span>{{ entry.state }}</span>
+          <span><i>{{ entry.state }}</i></span>
         {% endif %}
+      {% endif %}
     </li>
   {% else %}
     <li><em>Unbelievable.  No entries here so far</em>
