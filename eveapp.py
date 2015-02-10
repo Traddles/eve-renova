@@ -7,19 +7,14 @@ import datetime, sys
 #######
 # Eve
 app = Eve()
-# Flask
-flask = Flask(__name__)
 
 # DATABASE
 ############
 # Database config
-flask.config["MONGODB_SETTINGS"] = {'DB': "eve"}
-#flask.config["MONGODB_DB"] = "flaskie"
-flask.config["SECRET_KEY"] = "M3\xbd\xe4\xa5 g\x13\x10\x98\xa8\xb3@\xb5z\xfd\x02J\x90\xfd\x9cC\x87\x11"
+app.config["MONGODB_SETTINGS"] = {'DB': "eve"}
+#app.config["SECRET_KEY"] = "M3\xbd\xe4\xa5 g\x13\x10\x98\xa8\xb3@\xb5z\xfd\x02J\x90\xfd\x9cC\x87\x11"
 # Database connection
-engine = MongoEngine(flask)
-#client = engine.connection
-#db = client.eve
+engine = MongoEngine(app)
 
 # Model
 class Unit(engine.DynamicDocument):
@@ -73,7 +68,6 @@ def search(unitname="obama"):
 @app.route("/all/<string:state>")
 def get_with_state(state = None):
 	return jsonify(get_units(state))
-
 
 @app.route('/')
 def render_entries():
