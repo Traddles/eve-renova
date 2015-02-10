@@ -2,9 +2,9 @@
 Eve and falsk at the same time. `TRIAL`
 
 ## Get started
-Add some data to play with:
 
 ### Add data to 'unit'
+Add some data to play with:
 `curl -d '[{"name": "symb2", "state": "on"}]' -H 'Content-Type: application/json'  http://127.0.0.1:5000/unit`
 
 "Right now only state on and off is allowed."
