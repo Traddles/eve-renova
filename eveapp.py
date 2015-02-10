@@ -4,6 +4,11 @@ from flask import Flask, url_for, session, g, redirect, request, flash, render_t
 import datetime, sys
 from datamodels import Unit
 
+# Config
+PORT = 5111
+DEBUG = True
+
+
 # APP
 #######
 # Eve
@@ -16,7 +21,7 @@ app = Eve()
 def get_units(state):
 	units = Unit.objects
 	res = {}
-	# TODO: Modify
+	# TODO: Modify to comply to other states (HARDCODING PROBLEM)
 	if state and state not in ["on", "off"]:
 		return error_handling('03')
 	for e in units:
@@ -63,4 +68,4 @@ def render_entries():
 
 # MAIN
 if __name__ == '__main__':
-	app.run(debug=True, port=5111)
+	app.run(debug=DEBUG, port=PORT)
