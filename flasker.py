@@ -2,8 +2,11 @@ from flask import Flask, url_for, session, g, redirect, request, flash, render_t
 from datamodels import Unit
 import datetime
 
+DEBUG = True
+
 flask = Flask(__name__)
-flask.config.update(dict(DEBUG = True, USERNAME='admin', PASSWORD=''))
+flask.debug = DEBUG
+flask.config.update(dict(USERNAME='admin', PASSWORD=''))
 flask.config["SECRET_KEY"] = "M3\xbd\xe4\xa5 g\x13\x10\x98\xa8\xb3@\xb5z\xfd\x02J\x90\xfd\x9cC\x87\x11"
 
 def get_by_id(entry_id):
@@ -11,7 +14,7 @@ def get_by_id(entry_id):
 	if not entry:
 		abort(401)
 	return entry[0]
-	
+
 @flask.route('/login', methods=['GET', 'POST'])
 def login():
     error = None
@@ -45,4 +48,4 @@ def show_entries():
 
 if __name__ == '__main__':
 	# Flask
-	flask.run(host='0.0.0.0', debug=True)
+	flask.run(host='0.0.0.0')
