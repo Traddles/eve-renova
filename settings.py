@@ -15,19 +15,17 @@ schema = {
     # (https://github.com/nicolaiarocci/cerberus) for details.
     'name': {
         'type': 'string',
-        'minlength': 1,
+        'minlength': 5,
         'maxlength': 30,
         'required': True,
         # talk about hard constraints! For the purpose of the demo
         # 'lastname' is an API entry-point, so we need it to be unique.
         'unique': True,
     },
-    # 'role' is a list, and can only contain values from 'allowed'.
     'state': {
         'type': 'string',
         'allowed': ["on", "off"],
     },
-    # An embedded 'strongly-typed' dictionary.
     'location': {
         'type': 'dict',
         'schema': {
@@ -38,7 +36,7 @@ schema = {
             }
         },
     },
-    'implemented': {
+    'installed': {
         'type': 'datetime',
     },
 }
@@ -68,5 +66,7 @@ unit = {
 }
 
 
+# Domain structure :
+# unit : { location: dict,  }
 DOMAIN = {'unit': unit}
 

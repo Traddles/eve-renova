@@ -36,16 +36,11 @@ class Unit(engine.DynamicDocument):
 @app.route("/get")
 @app.route("/get/<string:unitname>")
 def search(unitname="obama"):
-	#unit = Unit.objects.get(name="obama")
 	e = get_unit(unitname)
 	print e
 	if(e):
 		return jsonify({'name': e.name, 'state': e.state})
-	#print e.state
 	return jsonify(error_handling('08'))
-
-#def get_all():
-#	return jsonify(get_units(None))
 
 @app.route("/all")
 @app.route("/all/<string:state>")
@@ -83,4 +78,3 @@ def error_handling(type, message = ''):
 # MAIN
 if __name__ == '__main__':
 	app.run(debug=True)
-    #flask.run(debug=True)
