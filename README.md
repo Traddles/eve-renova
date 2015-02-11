@@ -42,3 +42,4 @@ jsonify is aliased to `python -m json.tool`
 
 ### Comment
 "Cross-Origin Request Blocked: The Same Origin Policy disallows reading the remote resource at http://localhost:5111/all/on. This can be fixed by moving the resource to the same domain or enabling CORS."
+[Unleash ajax with CORS](http://dev.housetrip.com/2014/04/17/unleash-your-ajax-requests-with-cors/)
