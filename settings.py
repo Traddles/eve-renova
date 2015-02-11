@@ -6,6 +6,13 @@
 #MONGO_PORT = 27017
 #MONGO_DBNAME = 'eve'
 
+# CORS
+# TODO: Set exact domain address to be allowed CORS
+X_DOMAINS = '*'
+X_HEADERS = ['Content-Type', 'If-Match']
+#X_EXPOSE_HEADERS
+#X_MAX_AGE
+
 # Enable reads (GET), inserts (POST) and DELETE for resources/collections
 # (if you omit this line, the API will default to ['GET'] and provide
 # read-only access to the endpoint).
@@ -14,6 +21,7 @@ RESOURCE_METHODS = ['GET', 'POST', 'DELETE']
 # Enable reads (GET), edits (PATCH), replacements (PUT) and deletes of
 # individual items  (defaults to read-only item access).
 ITEM_METHODS = ['GET', 'PATCH', 'PUT', 'DELETE']
+PUBLIC_METHODS = ['GET', 'PATCH', 'POST', 'DELETE']
 
 schema = {
     # Schema definition, based on Cerberus grammar. Check the Cerberus project
