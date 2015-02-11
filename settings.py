@@ -6,9 +6,13 @@
 #MONGO_PORT = 27017
 #MONGO_DBNAME = 'eve'
 
+# Payload format
+JSON = True
+XML = False
+
 # CORS
 # TODO: Set exact domain address to be allowed CORS
-X_DOMAINS = 'http://127.0.0.1:5000/'
+X_DOMAINS = ['http://127.0.0.1:5000']
 X_HEADERS = ['Content-Type', 'If-Match']
 #X_EXPOSE_HEADERS
 #X_MAX_AGE
