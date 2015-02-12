@@ -1,4 +1,9 @@
-var myLink = "http://localhost:5111/unit";
+/**
+* We should have pre-compiled patch strings
+* curl -H "Content-Type: application/json" -H "If-Match: df43b5315ceebb5b45ac6825cd48caeb154d787c" -X PATCH -i http://0.0.0.0:5111/unit/54d8b2639f19a36c2c337a99 -d '{"state": "nigh"}'
+*/
+
+var myLink = "http://localhost:5111/unit/";
 var myLink2 = "http://localhost:5111/all/on";
 
 var dbDataContainer = document.getElementById('db-entries');
@@ -51,15 +56,27 @@ var sendAjax = function(e) {
 };
 
 // USE CREDENTIALS
-var reqJson = function(e) {
-
+var updateEntry = function(e) {
 	console.log(e.target);
+	if(e.target.tagName == 'INPUT') {
+		e.preventDefault();
+		var thisForm = e.target.parentNode;
+		var thisNode = thisForm.parentNode;
+		var entryId = thisForm.parentNode.dataset.id;
+		var entryState = thisForm.parentNode.dataset.state;
+		var entryEtag = thisForm.parentNode.dataset.state;
 
-	var req = new XMLHttpRequest();
-	req.open('GET', myLink2, true);
-	req.setRequestHeader('Content-Type', 'application/xml');
-	req.onreadystatechange = myResponseHandler;
-	req.send();
+		console.log(thisNode);
+		//alert('GO'+e.target.parentNode.parentNode.dataset.id);
+		/* Check value if needed to be updated
+		if(thisForm.getElementsByTagName('SELECT')[0].value) 
+		*** thisForm.getElementsByTagName('SELECT')[0].value gives numerical
+		*/
+		/*var req = new XMLHttpRequest();
+		req.open('PATCH', myLink+entryId, true);
+		req.onreadystatechange = function() {console.log('wawawiwa')};
+		req.send();*/
+	}
 };
 
 $(document).ready(function() {
@@ -67,4 +84,6 @@ $(document).ready(function() {
 });
 
 //dbDataContainer.addEventListener('click', sendAjax, false);
-document.getElementsByTagName('h1')[0].addEventListener('click', reqJson, false);
+//document.getElementsByTagName('h1')[0].addEventListener('click', reqJson, false);
+
+dbDataContainer.addEventListener('click', updateEntry, true);

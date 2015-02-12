@@ -16,6 +16,13 @@ Add some data to play with:
 ### Look at data
 `curl http://127.0.0.1:5000/all/on | jsonify`
 
+### Patch data
+To patch an item (with etag-check "If-Match"-thing)
+`curl -H "Content-Type: application/json" -H "If-Match: df43b5315ceebb5b45ac6825cd48caeb154d787c" -X PATCH -i http://0.0.0.0:5111/unit/54d8b2639f19a36c2c337a99 -d '{"state": "nigh"}'`
+
+#### Etags
+[Etags-uninitiated](https://ibuildings.nl/blog/2013/07/etags-uninitiated)
+
 #### jsonify alias in linux
 jsonify is aliased to `python -m json.tool`
 
