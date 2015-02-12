@@ -16,6 +16,33 @@ Add some data to play with:
 ### Look at data
 `curl http://127.0.0.1:5000/all/on | jsonify`
 
+### Look at unit data
+`curl -H 'Content-Type: application/json'  http://127.0.0.1:5111/unit/obama | jsonify`
+```python
+{
+    "_created": "Mon, 09 Feb 2015 13:21:16 GMT",
+    "_etag": "8b11ff59a484bdc74827a7c5cc7c7a33322f602c",
+    "_id": "54d8b44c9f19a36cc98cbdcf",
+    "_links": {
+        "collection": {
+            "href": "/unit",
+            "title": "unit"
+        },
+        "parent": {
+            "href": "",
+            "title": "home"
+        },
+        "self": {
+            "href": "/unit/54d8b44c9f19a36cc98cbdcf",
+            "title": "unit"
+        }
+    },
+    "_updated": "Thu, 12 Feb 2015 12:00:09 GMT",
+    "name": "obama",
+    "state": "on"
+}
+```
+
 ### Patch data
 To patch an item (with etag-check "If-Match"-thing)
 `curl -H "Content-Type: application/json" -H "If-Match: df43b5315ceebb5b45ac6825cd48caeb154d787c" -X PATCH -i http://0.0.0.0:5111/unit/54d8b2639f19a36c2c337a99 -d '{"state": "nigh"}'`

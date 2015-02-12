@@ -9,11 +9,7 @@
           <form action="/update/{{ entry.id }}" method=post class=update-entry>
             <SELECT NAME="state">
             {% for key, value in entry.allowed_fields.state.items() %}
-              {% if entry.state == value %}
-                <OPTION VALUE="{{ key }}" SELECTED>
-              {% else %}
-                <OPTION VALUE="{{ key }}">
-              {% endif %}
+                <OPTION VALUE="{{ value }}" {% if entry.state == value %} SELECTED {% endif %}>
               {{ value }}
             {% endfor %}
             </SELECT>

@@ -57,25 +57,50 @@ var sendAjax = function(e) {
 
 // USE CREDENTIALS
 var updateEntry = function(e) {
-	console.log(e.target);
+	//console.log(e.target);
 	if(e.target.tagName == 'INPUT') {
 		e.preventDefault();
 		var thisForm = e.target.parentNode;
-		var thisNode = thisForm.parentNode;
+		//var thisNode = thisForm.parentNode;
 		var entryId = thisForm.parentNode.dataset.id;
-		var entryState = thisForm.parentNode.dataset.state;
-		var entryEtag = thisForm.parentNode.dataset.state;
+		var oldState = thisForm.parentNode.dataset.state;
+		var newState = thisForm.getElementsByTagName('SELECT')[0].value;
+		var entryEtag = thisForm.parentNode.dataset.etag;
 
-		console.log(thisNode);
+		//console.log(thisNode);
 		//alert('GO'+e.target.parentNode.parentNode.dataset.id);
 		/* Check value if needed to be updated
-		if(thisForm.getElementsByTagName('SELECT')[0].value) 
+		
 		*** thisForm.getElementsByTagName('SELECT')[0].value gives numerical
 		*/
-		/*var req = new XMLHttpRequest();
-		req.open('PATCH', myLink+entryId, true);
-		req.onreadystatechange = function() {console.log('wawawiwa')};
-		req.send();*/
+
+		if(newState != oldState) {
+	    	var dataString = JSON.stringify({state: newState});
+			var req = new XMLHttpRequest();
+			req.open('PATCH', myLink+entryId, true);
+			req.setRequestHeader('Content-type','application/json; charset=utf-8');
+	        req.setRequestHeader("If-Match", entryEtag);
+		    req.setRequestHeader("Content-length", dataString.length);
+		    req.setRequestHeader("Connection", "close");
+			req.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					var payload = JSON.parse(this.response);
+					console.log(payload);
+					if(payload._status == "OK") {
+						thisForm.parentNode.dataset.etag = payload._etag;
+						thisForm.parentNode.dataset.state = newState;
+						console.log('PATCH performed! (new etag:) '+ payload._etag);
+					} else {
+						console.log(this.response);
+					}
+				} else if (this.readyState == 4) {
+					console.log('Somethings wrong with Patch request');
+				}
+			};
+			req.send(dataString);
+		} else {
+			console.log('PATCH request not needed. Nothing to update!');
+		}
 	}
 };
 
