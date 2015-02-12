@@ -16,6 +16,49 @@ function ajaxRequest(path = '') {
 	req.send();
 }
 
+// USE CREDENTIALS
+var updateEntry = function(e) {
+	if(e.target.tagName == 'INPUT') {
+		e.preventDefault();
+		var thisForm = e.target.parentNode;
+		var entryId = thisForm.parentNode.dataset.id;
+		var oldState = thisForm.parentNode.dataset.state;
+		var newState = thisForm.getElementsByTagName('SELECT')[0].value;
+		var entryEtag = thisForm.parentNode.dataset.etag;
+
+		//Check value if needed to be updated
+		if(thisForm.dataset.nrOfParams == 1 && newState != oldState) {
+	    	var dataString = JSON.stringify({state: newState});
+			var req = new XMLHttpRequest();
+			req.open('PATCH', myLink+entryId, true);
+			req.setRequestHeader('Content-type','application/json; charset=utf-8');
+	        req.setRequestHeader("If-Match", entryEtag);
+		    req.setRequestHeader("Content-length", dataString.length);
+		    req.setRequestHeader("Connection", "close");
+			req.onreadystatechange = function() {
+				//console.log(this);
+				if (this.readyState == 4 && this.status == 200) {
+					var payload = JSON.parse(this.response);
+					//console.log(payload);
+					if(payload._status == "OK") {
+						thisForm.parentNode.dataset.etag = payload._etag;
+						thisForm.parentNode.dataset.state = newState;
+						console.log('PATCH performed! (new etag:) '+ payload._etag);
+					} else {
+						console.log(this.response);
+						console.log("The PATCH request did not succeed!");
+					}
+				} else if (this.readyState == 4) {
+					console.log('Somethings wrong with Patch request');
+				}
+			};
+			req.send(dataString);
+		} else {
+			console.log('PATCH request not needed. Nothing to update!');
+		}
+	}
+};
+
 var myResponseHandler = function() {
 	if (this.readyState == 4 && this.status == 200) {
 		var payload = JSON.parse(this.response);
@@ -23,7 +66,7 @@ var myResponseHandler = function() {
   		var elements = dbDataContainer.getElementsByTagName('li');
   		if(elements.length != payload._items.length) {
   			alert('Somethings wrong (payload mismatch).1');
-  			return 0;
+  			return true;
   		}
 		for(i=0; i<payload._items.length; i++) {
 			if(elements[i].dataset.id != payload._items[i]._id &&
@@ -33,8 +76,10 @@ var myResponseHandler = function() {
 			elements[i].dataset.etag = payload._items[i]._etag;
 		}
 		console.log('Etag loading done');
-	}
-	else if (this.readyState == 4) {
+	} else if (this.readyState == 4 && this.status == 0) {
+		console.log('Reject all future ajax commands');
+		dbDataContainer.removeEventListener('click', updateEntry);
+	} else if (this.readyState == 4) {
 		console.log(this);
 	}
 };
@@ -55,60 +100,15 @@ var sendAjax = function(e) {
   req.send();
 };
 
-// USE CREDENTIALS
-var updateEntry = function(e) {
-	//console.log(e.target);
-	if(e.target.tagName == 'INPUT') {
-		e.preventDefault();
-		var thisForm = e.target.parentNode;
-		//var thisNode = thisForm.parentNode;
-		var entryId = thisForm.parentNode.dataset.id;
-		var oldState = thisForm.parentNode.dataset.state;
-		var newState = thisForm.getElementsByTagName('SELECT')[0].value;
-		var entryEtag = thisForm.parentNode.dataset.etag;
+dbDataContainer.addEventListener('click', updateEntry, false);
 
-		//console.log(thisNode);
-		//alert('GO'+e.target.parentNode.parentNode.dataset.id);
-		/* Check value if needed to be updated
-		
-		*** thisForm.getElementsByTagName('SELECT')[0].value gives numerical
-		*/
-
-		if(newState != oldState) {
-	    	var dataString = JSON.stringify({state: newState});
-			var req = new XMLHttpRequest();
-			req.open('PATCH', myLink+entryId, true);
-			req.setRequestHeader('Content-type','application/json; charset=utf-8');
-	        req.setRequestHeader("If-Match", entryEtag);
-		    req.setRequestHeader("Content-length", dataString.length);
-		    req.setRequestHeader("Connection", "close");
-			req.onreadystatechange = function() {
-				if (this.readyState == 4 && this.status == 200) {
-					var payload = JSON.parse(this.response);
-					console.log(payload);
-					if(payload._status == "OK") {
-						thisForm.parentNode.dataset.etag = payload._etag;
-						thisForm.parentNode.dataset.state = newState;
-						console.log('PATCH performed! (new etag:) '+ payload._etag);
-					} else {
-						console.log(this.response);
-					}
-				} else if (this.readyState == 4) {
-					console.log('Somethings wrong with Patch request');
-				}
-			};
-			req.send(dataString);
-		} else {
-			console.log('PATCH request not needed. Nothing to update!');
-		}
-	}
-};
-
-$(document).ready(function() {
+/*$(document).ready(function() {
 	ajaxRequest();
-});
+});*/
+
+window.onload = function() {
+  ajaxRequest();
+};
 
 //dbDataContainer.addEventListener('click', sendAjax, false);
 //document.getElementsByTagName('h1')[0].addEventListener('click', reqJson, false);
-
-dbDataContainer.addEventListener('click', updateEntry, true);

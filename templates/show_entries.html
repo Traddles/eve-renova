@@ -6,7 +6,7 @@
       <p>{{ entry.name }}</p>
       {% if session.logged_in %}
         {% if entry.allowed_fields %}
-          <form action="/update/{{ entry.id }}" method=post class=update-entry>
+          <form action="/update/{{ entry.id }}" method=post class=update-entry data-nr-of-params="{{ entry.allowed_fields|length }}">
             <SELECT NAME="state">
             {% for key, value in entry.allowed_fields.state.items() %}
                 <OPTION VALUE="{{ value }}" {% if entry.state == value %} SELECTED {% endif %}>
