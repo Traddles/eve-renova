@@ -21,7 +21,8 @@ var myResponseHandler = function() {
   			return 0;
   		}
 		for(i=0; i<payload._items.length; i++) {
-			if(elements[i].dataset.id != payload._items[i]._id) {
+			if(elements[i].dataset.id != payload._items[i]._id &&
+				elements[i].dataset.state != payload._items[i].state) {
   				alert('Somethings wrong (payload mismatch).2');
 			}
 			elements[i].dataset.etag = payload._items[i]._etag;

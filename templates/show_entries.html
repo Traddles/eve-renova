@@ -2,7 +2,7 @@
 {% block body %}
   <ul id="db-entries" class=entries>
   {% for entry in entries %}
-    <li data-id="{{ entry.id }}" data-etag="">
+    <li data-id="{{ entry.id }}" {% if entry.state %} data-state="{{ entry.state }}" {% endif %} data-etag="">
       <p>{{ entry.name }}</p>
       {% if session.logged_in %}
         {% if entry.allowed_fields %}
