@@ -102,13 +102,19 @@ var sendAjax = function(e) {
 
 dbDataContainer.addEventListener('click', updateEntry, false);
 
+/** Three alternatives to run ajaxRequest method after page is loaded */
 /*$(document).ready(function() {
 	ajaxRequest();
 });*/
-
 window.onload = function() {
   ajaxRequest();
 };
+var readyStateCheckInterval = setInterval(function() {
+    if (document.readyState === "complete") {
+	    console.log('Doc ready: 60 sec beat');
+	    ajaxRequest();
+    }
+}, 60000);
 
 //dbDataContainer.addEventListener('click', sendAjax, false);
 //document.getElementsByTagName('h1')[0].addEventListener('click', reqJson, false);
