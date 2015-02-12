@@ -6,6 +6,11 @@ Eve and falsk at the same time. `TRIAL`
 [Eve config](http://python-eve.org/config.html)
 
 ## Get started
+Run the following python apps simultaniously. E.g. in a split console screen: [Screen to split terminal](http://unix.stackexchange.com/questions/7453/how-to-split-the-terminal-into-more-than-one-view)
+
+Console 1: `python eveapp.py`
+
+Console 2: `python flasker.py`
 
 ### Add data to 'unit'
 Add some data to play with:
