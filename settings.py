@@ -12,7 +12,8 @@ XML = False
 
 # CORS
 # TODO: Set exact domain address to be allowed CORS
-X_DOMAINS = ['http://0.0.0.0:5000']
+X_DOMAINS = '*'
+#['http://0.0.0.0:5000']
 X_HEADERS = ['Content-Type', 'If-Match']
 #X_EXPOSE_HEADERS
 #X_MAX_AGE

@@ -68,4 +68,4 @@ def render_entries():
 
 # MAIN
 if __name__ == '__main__':
-	app.run(debug=DEBUG, port=PORT)
+	app.run(host='0.0.0.0', debug=DEBUG, port=PORT)

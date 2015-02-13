@@ -3,8 +3,13 @@
 * curl -H "Content-Type: application/json" -H "If-Match: df43b5315ceebb5b45ac6825cd48caeb154d787c" -X PATCH -i http://0.0.0.0:5111/unit/54d8b2639f19a36c2c337a99 -d '{"state": "nigh"}'
 */
 
-var myLink = "http://localhost:5111/unit/";
-var myLink2 = "http://localhost:5111/all/on";
+var windowLocation = window.location;
+
+var eveLocation = windowLocation.protocol + '//' + windowLocation.hostname + ":5111/";
+var myLink = eveLocation + "unit/";
+var myLink2 = eveLocation + "all/on";
+
+var nrOfParamsAllowed = 1;
 
 var dbDataContainer = document.getElementById('db-entries');
 
@@ -27,7 +32,7 @@ var updateEntry = function(e) {
 		var entryEtag = thisForm.parentNode.dataset.etag;
 
 		//Check value if needed to be updated
-		if(thisForm.dataset.nrOfParams == 1 && newState != oldState) {
+		if(thisForm.dataset.nrOfParams == nrOfParamsAllowed && newState != oldState) {
 	    	var dataString = JSON.stringify({state: newState});
 			var req = new XMLHttpRequest();
 			req.open('PATCH', myLink+entryId, true);
@@ -74,6 +79,15 @@ var myResponseHandler = function() {
   				alert('Somethings wrong (payload mismatch).2');
 			}
 			elements[i].dataset.etag = payload._items[i]._etag;
+			var snowball = elements[i].getElementsByTagName('SELECT');
+			if(snowball.length == nrOfParamsAllowed) {
+				for(j=0;j<snowball.length;j++) {
+					if(snowball[j].options.length == 2 &&
+					  snowball[j].selectedOptions[0].value != payload._items[i].state)
+					snowball[0].selectedIndex = (snowball[j].selectedOptions[0].index == 0 ? 1 : 0); 
+
+				}
+			}
 		}
 		console.log('Etag loading done');
 	} else if (this.readyState == 4 && this.status == 0) {
