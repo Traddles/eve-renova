@@ -81,12 +81,16 @@ var myResponseHandler = function() {
 			elements[i].dataset.etag = payload._items[i]._etag;
 			var snowball = elements[i].getElementsByTagName('SELECT');
 			if(snowball.length == nrOfParamsAllowed) {
-				for(j=0;j<snowball.length;j++) {
-					if(snowball[j].options.length == 2 &&
-					  snowball[j].selectedOptions[0].value != payload._items[i].state)
-					snowball[0].selectedIndex = (snowball[j].selectedOptions[0].index == 0 ? 1 : 0); 
-
+				//for(j=0;j<snowball.length;j++) {
+				var j = 0;
+				if(snowball[j].selectedOptions[0].value != payload._items[i].state) {
+					for(k=0;k<snowball[j].options.length;k++) {
+						if(snowball[j].options[k].value == payload._items[i].state) {
+							snowball[j].selectedIndex = snowball[j].options[k].index;
+						}
+					}
 				}
+				//}
 			}
 		}
 		console.log('Etag loading done');
