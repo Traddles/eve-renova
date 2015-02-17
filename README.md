@@ -17,7 +17,7 @@ Console 2: `python flasker.py`
 
 ### Add data to 'unit'
 Add some data to play with:
-`curl -d '[{"name": "symb2", "state": "on"}]' -H 'Content-Type: application/json'  http://127.0.0.1:5000/unit`
+`curl -d '[{"name": "tvättmaskin", "state": "off"}]' -H 'Content-Type: application/json'  http://0.0.0.0:5111/unit`
 
 "Right now only state on and off is allowed."
 
