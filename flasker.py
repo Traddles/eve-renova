@@ -59,7 +59,7 @@ def update_entry(entry_id):
 
 @flask.route('/')
 def show_entries():
-    entries = Unit.objects
+    entries = Unit.objects()
     return render_template('show_entries.html', entries=entries)
     return "Smile to thworld"
 
