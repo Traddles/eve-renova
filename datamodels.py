@@ -4,7 +4,7 @@ import datetime
 # engine = MongoEngine()
 # engine.connect(db='eve')
 
-from models import Unit, db_session
+from models import Unit
 
 # Model
 # class Unit(engine.DynamicDocument):

@@ -1,7 +1,7 @@
 from flask import Flask, url_for, session, g, redirect, request, flash, render_template, send_from_directory
-from datamodels import Unit, db_session
+from models import Unit, db_session, DB_PATH
 from sqlalchemy import exc
-import datetime
+import datetime, os
 
 DEBUG = True
 
@@ -76,5 +76,7 @@ def shutdown_session(exception=None):
     db_session.remove()
 
 if __name__ == '__main__':
-	# Flask
-	flask.run(host='0.0.0.0')
+    # Flask
+
+    print 'Running in %r using db: %r' % (os.getcwd(), DB_PATH)
+    flask.run(host='0.0.0.0')

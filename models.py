@@ -1,6 +1,6 @@
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
 from sqlalchemy.orm import mapper, relationship, backref
-from database import metadata, db_session, Base
+from database import metadata, db_session, Base, DB_PATH
 import datetime
 
 class Unit(Base):
@@ -14,12 +14,17 @@ class Unit(Base):
 
     responsible = Column(String(50))
 
-    allowed_states = {'state': {0: 'on', 1: 'off'}}
-
-
+    allowed_states = {'state': {0: 'heating on', 1: '8-degrees'}}
+    #print "AC HEATING"
+        
     def __init__(self, name=None, state=None):
         self.name = name
         self.state = state
+        # if('ac_heating' in self.name):
+        #     print "AC HEATING"
+        # else:
+        #     self.allowed_states = {'state': {0: 'on', 1: 'off'}}
+        #     print "ON OFF"
 
     def __repr__(self):
         return '<Unit %r: %r>' % (self.name, self.state)

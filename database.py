@@ -2,7 +2,8 @@ from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import scoped_session, sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-engine = create_engine('sqlite:////tmp/test3.db', convert_unicode=True)
+DB_PATH = 'sqlite:///db/test.db'
+engine = create_engine(DB_PATH, convert_unicode=True)
 metadata = MetaData()
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
