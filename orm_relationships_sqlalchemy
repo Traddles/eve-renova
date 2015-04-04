@@ -1,0 +1,10 @@
+state = AllowedStates(name="off")
+
+emp1 = Unit(name="emp1", state ="n")
+emp2 = Unit(name="emp2", state ="n")
+
+state.state_units.extend([
+    UnitState(unit=emp1, role_name="tech lead"),
+    UnitState(unit=emp2, role_name="account executive")
+])
+
