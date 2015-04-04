@@ -1,6 +1,5 @@
 from flask import Flask, url_for, session, g, redirect, request, flash, render_template, send_from_directory
-from models import Unit, db_session, DB_PATH
-from sqlalchemy import exc
+from models import Unit, db_session, DB_PATH, init_db
 import datetime, os
 
 DEBUG = True
@@ -45,18 +44,18 @@ def update_entry(entry_id):
         return redirect(url_for('show_entries'))
     update_object = get_by_id(entry_id)
 
-    print "This is him:", update_object.name
+    #print "This is him:", update_object.name
     for key in request.form:
         choice = request.form[key]
         # if(isinstance(choice,int)):
         #     choice = int(choice)
-        print "PATHIL", choice
         print key, choice
 
         if choice in update_object.allowed_states[key]:
             print "allright"
             choice = int(update_object.allowed_states[key][choice])
         update_object.state = update_object.allowed_states['state'][int(choice)]
+        print "Updated to '%r'" % update_object
 
     update_object.save()
     flash('Entry was updated')
@@ -64,11 +63,7 @@ def update_entry(entry_id):
 
 @flask.route('/')
 def show_entries():
-    entries = []
-    try:
-        entries = Unit.objects()
-    except exc.SQLAlchemyError:
-        pass
+    entries = Unit.objects()
     return render_template('show_entries.html', entries=entries)
 
 @flask.teardown_appcontext
@@ -76,7 +71,11 @@ def shutdown_session(exception=None):
     db_session.remove()
 
 if __name__ == '__main__':
-    # Flask
-
+    init_db()
+    if not Unit.objects():
+        Unit('ac_heating',Unit.allowed_states['state'][0]).save()
+        print Unit.objects()[0], "added to db"
     print 'Running in %r using db: %r' % (os.getcwd(), DB_PATH)
+
+    # Flask
     flask.run(host='0.0.0.0')

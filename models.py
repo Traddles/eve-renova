@@ -1,6 +1,6 @@
-from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, exc
 from sqlalchemy.orm import mapper, relationship, backref
-from database import metadata, db_session, Base, DB_PATH
+from database import metadata, db_session, Base, DB_PATH, init_db
 import datetime
 
 class Unit(Base):
@@ -32,7 +32,12 @@ class Unit(Base):
     @staticmethod
     def objects(id = -1):
         if id is -1:
-            return Unit.query.all()
+            entries =  []
+            try:
+                entries = Unit.query.all()
+            except exc.SQLAlchemyError:
+                pass
+            return entries
         else:
             return Unit.query.get(id)
 

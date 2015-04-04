@@ -27,9 +27,11 @@ def poll_ac_env_temp_sensor():
     ))
     print ' >> poll no.', poll_i, "ac env temp: {:3.4f} degrees.".format(temp_sensor_value)
 
-running= True
-while running:
-    start = time.clock()
-    poll_ac_env_temp_sensor()
-    work_duration = time.clock() - start
-    time.sleep( polling_interval - work_duration )
+
+if __name__ == '__main__':
+    running= True
+    while running:
+        start = time.clock()
+        poll_ac_env_temp_sensor()
+        work_duration = time.clock() - start
+        time.sleep( polling_interval - work_duration )
