@@ -38,8 +38,8 @@ var updateEntry = function(e) {
 			req.open('PATCH', myLink+entryId, true);
 			req.setRequestHeader('Content-type','application/json; charset=utf-8');
 	        req.setRequestHeader("If-Match", entryEtag);
-		    req.setRequestHeader("Content-length", dataString.length);
-		    req.setRequestHeader("Connection", "close");
+		    //req.setRequestHeader("Content-length", dataString.length);
+		    //req.setRequestHeader("Connection", "close");
 			req.onreadystatechange = function() {
 				//console.log(this);
 				if (this.readyState == 4 && this.status == 200) {
