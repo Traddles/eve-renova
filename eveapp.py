@@ -31,7 +31,7 @@ def get_units(state):
 			res[str(e.id)] = {'name': e.name, 'state': e.state}
 	return res
 
-def get_unit(name):
+def get_unit(unitname):
 	try:
 		return Unit.objects.get(name=unitname)
 	except(NameError):
@@ -51,7 +51,7 @@ def error_handling(type, message = ''):
 @app.route("/get/<string:unitname>")
 def search(unitname="obama"):
 	e = get_unit(unitname)
-	print e
+	print "Get for", unitname, "result:", e
 	if(e):
 		return jsonify({'name': e.name, 'state': e.state})
 	return jsonify(error_handling('08'))

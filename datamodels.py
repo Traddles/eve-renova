@@ -10,7 +10,7 @@ class Unit(engine.DynamicDocument):
 	updated_at = engine.DateTimeField(default=datetime.datetime.now, required=True, db_field ="_updated")
 	allowed_fields = engine.DictField(required=False, db_field ="_allowed_fields")
 	field_types = engine.DictField(required=False, db_field ="_field_types")
-	name = engine.StringField(max_length=30, required=True)
+	name = engine.StringField(max_length=30, required=True, unique=True)
 	state = engine.StringField(max_length=30, required=False)
 	def __unicode__(self):
 		return self.name
