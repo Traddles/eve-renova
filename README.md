@@ -78,6 +78,9 @@ jsonify is aliased to `python -m json.tool`
 }
 ```
 
+### Data schema
+Check settings.py out and see the configuration of the rules for the fields in the schema definition.
+
 ## Future additions to functionality
 * Todo-list for different areas (cabin e.g.) [How to](http://blog.miguelgrinberg.com/post/designing-a-restful-api-with-python-and-flask)
 
